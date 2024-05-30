@@ -1,19 +1,19 @@
 # Desafio Inovamind 
 
-Crie um web crawler para efetuar uma busca de frases no site http://quotes.toscrape.com/.
-As infomações vindas do crawler devem ser disponibilizadas por uma API. Esta API deve receber como
-parâmetro uma tag e buscar por frases que estejam classificadas de acordo com esta tag.
-As informações extraidas do site devem ser salvas no MongoDB que simulará um cache, onde caso a tag já
-tenha sido pesquisada, deverá retornar os dados persistidos previamente no banco de dados.
+Create a web crawler to search for quotes on the website http://quotes.toscrape.com/. 
+The information obtained from the crawler should be made available through an API. 
+This API should accept a tag as a parameter and search for quotes that are classified according to this tag. 
+The information extracted from the website should be saved in MongoDB, which will simulate a cache. 
+If the tag has already been searched for, it should return the previously stored data from the database.
 
-## Tecnologias
+## Tech
 * Ruby 3.0.1
 * Rails 6.1.4
 * Mongo 5.0.3
 
-### Instalando projeto e dependencias
+### Install dependecies
 
-* Clonar a aplicação
+* Clone app
 
 * `git clone https://github.com/Jrolisilva/inovamind.git`
 
@@ -25,29 +25,24 @@ tenha sido pesquisada, deverá retornar os dados persistidos previamente no banc
 
 * `rails s` (Setar o rails)
 
-### Obtenção do Token de acesso
+### Get access token
 
-Faça o cadastro do email e senha
-No end point: POST http://localhost:3000/api/v1/users
+Register the email and password at the endpoint: POST http://localhost:3000/api/v1/users
 
+After that, authenticate to receive the Token at the endpoint: http://localhost:3000/api/v1/authenticate
 
-Após isso faça autenticação para receber o Token
-No end point http://localhost:3000/api/v1/authenticate
+Use the Token to access the quotes searches as shown below:
 
-Com o Token faça o acesso as buscas pelas quotes conforme mostrado abaixo
+### Endpoints
+Search quotes by tags: GET http://localhost:3000/api/v1/quotes/{desired tag}
 
-### End point
+Search all quotes: GET http://localhost:3000/api/v1/quotes/
 
-Buscar os quotes por tags: GET http://localhost:3000/api/v1/quotes/{tag desejada}
+Features
+The API uses MongoDB to create a cache with the tag searches as follows:
 
-Buscar todos os quotes: GET  http://localhost:3000/api/v1/quotes/
-
-### Funcionalidades
-
-API utiliza MongoDB para criar um cache com as pesquisas de tags da seguinte forma:
-
-* Obtém a palavra-chave pesquisada através do parâmetro `:search_tag`
-* Acessa a URL http://quotes.toscrape.com/tag/#{search_tag} e salva a página como um arquivo HTML.
-* Faz uma varredura no arquivo com Nokogiri, e cria um Array com as divs que contém a classe `.quote`
-* É feita uma iteração no Array, separando os dados em citação, autor, link do autor, e tags.
-* Renderiza o resultado da pesquisa do Banco em formato JSON.
+* Obtains the searched keyword through the :search_tag parameter
+*Accesses the URL http://quotes.toscrape.com/tag/#{search_tag} and saves the page as an HTML file.
+* Scans the file with Nokogiri and creates an Array with the divs that contain the .quote class.
+* Iterates over the Array, separating the data into quote, author, author's link, and tags.
+* Renders the search result from the database in JSON format.
